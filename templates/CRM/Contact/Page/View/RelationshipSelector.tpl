@@ -24,15 +24,18 @@
  +--------------------------------------------------------------------+
 *}
 {* relationship selector *}
+{php}
+  $allRelationshipType = CRM_Contact_BAO_Relationship::getContactRelationshipType(NULL, NULL, NULL, NULL, TRUE);
+  $this->assign("allRelationshipType", $allRelationshipType);
+{/php}
 {if $context EQ 'current'}
   <label>Filter by Relationship Type </label>&nbsp;
-  {crmAPI var='result' entity='RelationshipType' action='get' return="name_a_b"}
-  <select id="reltypefilter" class="crm-form-select">
-    <option value="">- all relationship type(s) -</option>
-    {foreach from=$result.values item=relationshiptype}
-      <option>{$relationshiptype.name_a_b}</option>
-    {/foreach}
-  </select>
+  <select class="crm-select2 crm-form-select" id="reltypefilter" tabindex="-1" title="Relationship Type">
+  <option value="">- all relationship type(s) -</option>
+  {foreach from=$allRelationshipType item=relationshiptype}
+    <option>{$relationshiptype}</option>
+  {/foreach}
+</select>
 {/if}
 <br />
 <br />
