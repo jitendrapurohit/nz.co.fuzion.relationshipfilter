@@ -30,10 +30,9 @@
 {/php}
 {if $context EQ 'current'}
   <label>Filter by Relationship Type </label>&nbsp;
-  <select class="crm-select2 crm-form-select" id="reltypefilter" tabindex="-1" title="Relationship Type">
-  <option value="">- all relationship type(s) -</option>
+  <select class="crm-select2 crm-form-multiselect" multiple='multiple' id="reltypefilter" tabindex="-1" title="Relationship Type">
   {foreach from=$allRelationshipType item=relationshiptype}
-    <option>{$relationshiptype}</option>
+    <option value="{$relationshiptype}">{$relationshiptype}</option>
   {/foreach}
 </select>
 {/if}
@@ -63,10 +62,11 @@
 <script type="text/javascript">
   (function($) {
 
-    $('#reltypefilter').on( 'change', function () {
+    $('#reltypefilter').on('change', function () {
+      search_string = $(this).val().join('|');
       $('table.crm-contact-relationship-selector-current').DataTable()
         .column($(this).attr('search-column'))
-        .search(this.value)
+        .search(search_string, true, false)
         .draw();
       $('[id="relselector_filter"]').remove();
       $('[id="relselector_length"]:not(#relselector_length:first)').remove();
