@@ -123,6 +123,33 @@ function relationshipfilter_civicrm_alterSettingsFolders(&$metaDataFolders = NUL
   _relationshipfilter_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
+function relationshipfilter_civicrm_buildForm($formName, &$form) {
+  if ($formName == 'CRM_Contact_Form_Search_Advanced' && $form->_searchPane == "relationship") {
+    $templatePath = realpath(dirname(__FILE__)."/templates");
+    $form->addEntityRef('select_relation_target_name', ts('Select Target Contact'), array(
+      'create' => FALSE,
+      'api' => array('extra' => array('email')),
+    ));
+    CRM_Core_Region::instance('page-body')->add(array(
+      'template' => "{$templatePath}/relationshipfilter.tpl"
+    ));
+
+  }
+}
+
+function relationshipfilter_civicrm_preProcess($formName, &$form) {
+  if ($formName == 'CRM_Contact_Form_Search_Advanced'
+    && !empty($form->_submitValues['select_relation_target_name'])
+    && is_numeric($form->_submitValues['select_relation_target_name'])) {
+
+    $form->_submitValues['relation_target_name'] = civicrm_api3('Contact', 'getvalue', array(
+      'return' => "sort_name",
+      'id' => $form->_submitValues['select_relation_target_name'],
+    ));
+  }
+}
+
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**
