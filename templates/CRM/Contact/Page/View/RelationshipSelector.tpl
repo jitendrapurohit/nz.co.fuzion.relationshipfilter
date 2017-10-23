@@ -61,9 +61,11 @@
 {literal}
 <script type="text/javascript">
   (function($) {
-
     $('#reltypefilter').on('change', function () {
-      search_string = $(this).val().join('|');
+      search_string = '';
+      if ($(this).val()) {
+        search_string = $(this).val().join('|');
+      }
       $('table.crm-contact-relationship-selector-current').DataTable()
         .column($(this).attr('search-column'))
         .search(search_string, true, false)
