@@ -123,10 +123,6 @@ function relationshipfilter_civicrm_alterSettingsFolders(&$metaDataFolders = NUL
   _relationshipfilter_civix_civicrm_alterSettingsFolders($metaDataFolders);
 }
 
-function relationshipfilter_civicrm_searchColumns( $objectName, &$headers,  &$values, &$selector ) {
-  CRM_Core_Error::Debug_var('$objectName', $objectName);
-}
-
 function relationshipfilter_civicrm_buildForm($formName, &$form) {
   if ($formName == 'CRM_Contact_Form_Search_Advanced' && $form->_searchPane == "relationship") {
     $templatePath = realpath(dirname(__FILE__)."/templates");
