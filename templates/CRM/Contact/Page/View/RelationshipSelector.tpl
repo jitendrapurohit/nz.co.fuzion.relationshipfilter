@@ -41,6 +41,7 @@
 <div class="crm-contact-relationship-{$context}">
   <table id="relselector"
     class="crm-contact-relationship-selector-{$context} crm-ajax-table"
+    data-page-length="10",
     data-searching='true',
     data-ajax="{crmURL p="civicrm/ajax/contactrelationships" q="context=$context&cid=$contactId"}">
     <thead>
@@ -68,7 +69,7 @@
       }
       $('table.crm-contact-relationship-selector-current').DataTable()
         .column($(this).attr('search-column'))
-        .search(search_string, true, false)
+        .search(search_string)
         .draw();
       $('[id="relselector_filter"]').remove();
       $('[id="relselector_length"]:not(#relselector_length:first)').remove();
